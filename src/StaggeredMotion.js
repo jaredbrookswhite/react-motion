@@ -161,8 +161,14 @@ const StaggeredMotion = React.createClass({
             newLastIdealStyle[key] = styleValue;
             newLastIdealVelocity[key] = 0;
           } else {
-            let newLastIdealStyleValue = this.state.lastIdealStyles[i][key];
-            let newLastIdealVelocityValue = this.state.lastIdealVelocities[i][key];
+            var newLastIdealStyleValue =  (
+              this.state.lastIdealStyles[i] ||
+              this.state.lastIdealStyles[i - 1]
+            )[key];
+            var newLastIdealVelocityValue = (
+              this.state.lastIdealVelocities[i] ||
+              this.state.lastIdealVelocities[i - 1]
+            )[key];
             for (let j = 0; j < framesToCatchUp; j++) {
               [newLastIdealStyleValue, newLastIdealVelocityValue] = stepper(
                 msPerFrame / 1000,
